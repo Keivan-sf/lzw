@@ -10,6 +10,10 @@ struct symbolEntry {
 
 struct symbolEntry symbol[1000];
 
+// getSymbol
+// setSymbol
+
+
 void input() {
   char ch;
   while((ch = getchar()) != EOF) {
