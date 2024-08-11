@@ -8,11 +8,17 @@ struct symbolEntry {
   char* ch;
 };
 
-struct symbolEntry symbol[1000];
+struct symbolEntry symbol_table[1000];
 
-// getSymbol
-// setSymbol
-
+int getSymbolViaNumber(unsigned int symbol , struct symbolEntry* result) {
+  for(int i = 0; i< number_of_symbols; i++) {
+    if(symbol_table[i].symbol == symbol) {
+      *result = symbol_table[i];
+      return 1;
+    }
+  }  
+  return -1;
+}
 
 void input() {
   char ch;
@@ -31,15 +37,20 @@ char* concat(const char* str1, const char* str2) {
 int main() {
   for(int i = 0; i < 10; i++) {
     struct symbolEntry s1;
-    s1.symbol = 256;
+    s1.symbol = 256 + i;
     char b[2] = "";
     sprintf(b, "%d" , i);
     s1.ch = concat("reset , " , b);
-    symbol[i] = s1;
+    symbol_table[i] = s1;
+    number_of_symbols++;
   }
 
-  for(int i = 0; i < 10; i++) {
-    struct symbolEntry s1= symbol[i];
-    printf("%d: %s\n", s1.symbol , s1.ch);
+  for(unsigned int i = 0; i < 10; i++) {
+    struct symbolEntry * se = malloc(sizeof(struct symbolEntry));
+    int result = 0;
+    if((result = getSymbolViaNumber(i + 256 , se)) > 0) {
+      printf("%d: %s\n", se->symbol , se->ch);
+    }
+    free(se);
   }
 }
