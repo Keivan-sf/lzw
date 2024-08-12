@@ -20,6 +20,16 @@ int getSymbolViaNumber(unsigned int symbol , struct symbolEntry* result) {
   return -1;
 }
 
+int getSymbolViaChar(char* ch , struct symbolEntry* result) {
+  for(int i = 0; i< number_of_symbols; i++) {
+    if(strcmp(symbol_table[i].ch , ch) == 0) {
+      *result = symbol_table[i];
+      return 1;
+    }
+  }  
+  return -1;
+}
+
 void input() {
   char ch;
   while((ch = getchar()) != EOF) {
@@ -44,11 +54,26 @@ int main() {
     symbol_table[i] = s1;
     number_of_symbols++;
   }
+  //
+  // for(unsigned int i = 0; i < 10; i++) {
+  //   struct symbolEntry * se = malloc(sizeof(struct symbolEntry));
+  //   int result = 0;
+  //   if((result = getSymbolViaNumber(i + 256 , se)) > 0) {
+  //     printf("%d: %s\n", se->symbol , se->ch);
+  //   }
+  //   free(se);
+  // }
+
 
   for(unsigned int i = 0; i < 10; i++) {
     struct symbolEntry * se = malloc(sizeof(struct symbolEntry));
     int result = 0;
-    if((result = getSymbolViaNumber(i + 256 , se)) > 0) {
+    
+    char b[2] = "";
+    sprintf(b, "%d" , i);
+    char* ch = concat("reset , " , b);
+
+    if((result = getSymbolViaChar(ch , se)) > 0) {
       printf("%d: %s\n", se->symbol , se->ch);
     }
     free(se);
