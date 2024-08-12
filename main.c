@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -47,23 +48,28 @@ char* concat(const char* str1, const char* str2) {
   return result;
 }
 
-int main() {
-  for(int i = 0; i < 10; i++) {
-    char b[2] = "";
-    sprintf(b, "%d" , i);
-    char* ch = concat("reset , " , b);
-    addSymbol(ch) ;
+void fillSymbolTableTill256() {
+  uint8_t i = 0;
+  for(int j = 0; j < 256; j++) {
+    char *b = malloc(2 * sizeof(char));
+    b[0] = i;
+    // printf("We are printing b , %s hello ?\n" , b);
+    addSymbol(b);
+    i++;
   }
+}
 
-for(unsigned int i = 0; i < 10; i++) {
-    // char * ch = symbol_table[i];
-    char ** ch = malloc(sizeof(char *));
-    int result = 0;
-    if((result = getSymbolValue(i , ch)) >= 0) {
-      printf("%d: %s\n", i , *ch);
+int main() {
+  fillSymbolTableTill256();
+  for(unsigned int j = 0; j < 256; j++) {
+      char ** ch = malloc(sizeof(char *));
+      int result = 0;
+      if((result = getSymbolValue(j , ch)) >= 0) {
+        // printf("%d: %c %02x\n", i , *(*ch+0) , *(*ch+0) & 0xff);
+        printf("%c" , *(*ch+0));
+      }
+      free(ch);
     }
-    free(ch);
-  }
 }
 
 
