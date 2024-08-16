@@ -22,6 +22,8 @@ int getSymbolValue(unsigned int symbol, char **result) {
 
 int getSymbolNumber(char *ch) {
   for (int i = 0; i < number_of_symbols; i++) {
+    if (i == 256)
+      continue;
     if (strcmp(symbol_table[i], ch) == 0) {
       return i;
     }
@@ -53,7 +55,6 @@ void fillSymbolTableTill256() {
   for (int j = 0; j < 256; j++) {
     char *b = malloc(2 * sizeof(char));
     b[0] = i;
-    // printf("We are printing b , %s hello ?\n" , b);
     addSymbol(b);
     i++;
   }
@@ -66,40 +67,74 @@ void printSymbolsTill256() {
     char **ch = malloc(sizeof(char *));
     int result = 0;
     if ((result = getSymbolValue(j, ch)) >= 0) {
-      // printf("%d: %c %02x\n", i , *(*ch+0) , *(*ch+0) & 0xff);
       printf("%c", *(*ch + 0));
     }
     free(ch);
   }
 }
 
-char *concatCharToStr(const char *str, int current_str_len, const char c) {
-  char *result = malloc((current_str_len + 1) * sizeof(char));
+void printSymbolsAfter256() {
+  printf("-- | ");
+  for (unsigned int j = 257; j < number_of_symbols; j++) {
+    char **ch = malloc(sizeof(char *));
+    int result = 0;
+    if ((result = getSymbolValue(j, ch)) >= 0) {
+      printf("%s | ", *ch);
+    }
+    free(ch);
+  }
+  printf("--\n");
+}
+
+char *concatCharToStr(const char *str, const char c) {
+  int current_str_len = strlen(str);
+  char *result = malloc((current_str_len + 2) * sizeof(char));
   for (int i = 0; i < current_str_len; i++) {
     result[i] = str[i];
   }
   result[current_str_len] = c;
+  result[current_str_len + 1] = 0;
   return result;
 }
 
 int main() {
   fillSymbolTableTill256();
-  unsigned int index = 0;
   char *workingData = malloc(2 * sizeof(char));
   char ch;
 
   if ((ch = getchar()) != EOF) {
-    printf("got another char: %c\n", ch);
+    printf("first char: %c\n\n", ch);
     char *tempWorking = workingData;
-    workingData[index++] = ch;
+    workingData[0] = ch;
+    workingData[1] = 0;
   }
 
+  printf("working: %s\n", workingData);
+
   while ((ch = getchar()) != EOF) {
-    printf("got another char: %c\n", ch);
-    char *current = concatCharToStr(workingData, index++, ch);
-    free(workingData);
-    workingData = current;
-    printf("-%s-\n", workingData);
+    printf("curr: %c\n", ch);
+    char *arg = concatCharToStr(workingData, ch);
+    printf("arg: %s\n", arg);
+    int idx = 0;
+    if ((idx = getSymbolNumber(arg)) > 0) {
+      printf("symbol exists in list\n");
+      free(workingData);
+      workingData = arg;
+    } else {
+      addSymbol(arg);
+      printf("> out: %d \n", getSymbolNumber(workingData));
+      char *currentChar = malloc(2 * sizeof(char));
+      currentChar[0] = ch;
+      currentChar[1] = 0;
+      free(workingData);
+      workingData = currentChar;
+    }
+    printf("\n\nworking: %s\n", workingData);
+    printSymbolsAfter256();
+  }
+
+  if (strlen(workingData) > 0) {
+    printf("\n> last output: %d \n", getSymbolNumber(workingData));
   }
 }
 
