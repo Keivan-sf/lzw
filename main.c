@@ -97,6 +97,7 @@ int main() {
   while ((ch = getchar()) != EOF) {
     printf("got another char: %c\n", ch);
     char *current = concatCharToStr(workingData, index++, ch);
+    free(workingData);
     workingData = current;
     printf("-%s-\n", workingData);
   }
