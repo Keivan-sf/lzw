@@ -73,7 +73,34 @@ void printSymbolsTill256() {
   }
 }
 
-int main() { fillSymbolTableTill256(); }
+char *concatCharToStr(const char *str, int current_str_len, const char c) {
+  char *result = malloc((current_str_len + 1) * sizeof(char));
+  for (int i = 0; i < current_str_len; i++) {
+    result[i] = str[i];
+  }
+  result[current_str_len] = c;
+  return result;
+}
+
+int main() {
+  fillSymbolTableTill256();
+  unsigned int index = 0;
+  char *workingData = malloc(2 * sizeof(char));
+  char ch;
+
+  if ((ch = getchar()) != EOF) {
+    printf("got another char: %c\n", ch);
+    char *tempWorking = workingData;
+    workingData[index++] = ch;
+  }
+
+  while ((ch = getchar()) != EOF) {
+    printf("got another char: %c\n", ch);
+    char *current = concatCharToStr(workingData, index++, ch);
+    workingData = current;
+    printf("-%s-\n", workingData);
+  }
+}
 
 void _testfunction() {
   for (int i = 0; i < 10; i++) {
