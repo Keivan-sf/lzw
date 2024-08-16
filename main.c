@@ -57,6 +57,8 @@ void fillSymbolTableTill256() {
     addSymbol(b);
     i++;
   }
+  // reserved for reset character
+  number_of_symbols++;
 }
 
 void printSymbolsTill256() {
@@ -71,10 +73,7 @@ void printSymbolsTill256() {
   }
 }
 
-int main() {
-  fillSymbolTableTill256();
-  printSymbolsTill256();
-}
+int main() { fillSymbolTableTill256(); }
 
 void _testfunction() {
   for (int i = 0; i < 10; i++) {
