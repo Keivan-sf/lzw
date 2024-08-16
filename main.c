@@ -59,8 +59,7 @@ void fillSymbolTableTill256() {
   }
 }
 
-int main() {
-  fillSymbolTableTill256();
+void printSymbolsTill256() {
   for (unsigned int j = 0; j < 256; j++) {
     char **ch = malloc(sizeof(char *));
     int result = 0;
@@ -70,6 +69,11 @@ int main() {
     }
     free(ch);
   }
+}
+
+int main() {
+  fillSymbolTableTill256();
+  printSymbolsTill256();
 }
 
 void _testfunction() {
