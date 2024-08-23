@@ -4,11 +4,35 @@
 int writeBitsToUint8Array(unsigned int n, unsigned int bit_len,
                           unsigned int currentPos, uint8_t *output);
 void testWriteBitsToUint8Array();
+int pow_int(int a, int b);
 
 int main() {
   printf("Hello there guys\n");
-  testWriteBitsToUint8Array();
+  int n = 0b110100101;
+  int bit_len = 9;
+  int n_bit = pow_int(2, bit_len);
+  int reversed_bit = 1;
+  int reversed = 0;
+  for (int i = 0; i < bit_len; i++) {
+    if (n == 0) {
+      break;
+    }
+    n_bit = pow_int(2, bit_len - 1 - i);
+    reversed_bit = pow_int(2, i);
+    int is_bit_enabled = n >= n_bit;
+    reversed += is_bit_enabled * reversed_bit;
+    n -= is_bit_enabled * n_bit;
+  }
+  printf("\nThe reversed number is %d", reversed);
   return 0;
+}
+
+int pow_int(int a, int b) {
+  int answer = 1;
+  for (int i = 0; i < b; i++) {
+    answer *= a;
+  }
+  return answer;
 }
 
 void testWriteBitsToUint8Array() {
