@@ -3,8 +3,15 @@
 
 int writeBitsToUint8Array(unsigned int n, unsigned int bit_len,
                           unsigned int currentPos, uint8_t *output);
+void testWriteBitsToUint8Array();
+
 int main() {
   printf("Hello there guys\n");
+  testWriteBitsToUint8Array();
+  return 0;
+}
+
+void testWriteBitsToUint8Array() {
   uint8_t output[1000];
   for (int i = 0; i < 1000; i++) {
     output[i] = 0;
@@ -19,11 +26,6 @@ int main() {
   printf("\noutput[1]: %d", output[1]);
   printf("\noutput[2]: %d", output[2]);
   printf("\noutput[3]: %d", output[3]);
-  unsigned int a = 12;
-  a = (~a) << 3;
-  a = ~a;
-  printf("\na is %d", a);
-  return 0;
 }
 
 int writeBitsToUint8Array(unsigned int n, unsigned int bit_len,
