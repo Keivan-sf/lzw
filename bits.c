@@ -85,6 +85,7 @@ int writeBitsToUint8Array(unsigned int n, unsigned int bit_len,
       int n1 = n & a;
       n1 = n1 << (shift_number * -1);
       output[index] = output[index] | n1;
+      currentPos += remaining_bits;
       remaining_bits = 0;
     }
   }
