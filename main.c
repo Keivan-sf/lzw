@@ -1,8 +1,9 @@
+#include "chars.h"
+#include "io.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "chars.h"
 
 int number_of_symbols = 0;
 struct symbolEntry {
