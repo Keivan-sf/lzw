@@ -4,12 +4,24 @@
 int writeBitsToUint8Array(unsigned int n, unsigned int bit_len,
                           unsigned int currentPos, uint8_t *output);
 void testWriteBitsToUint8Array();
+void testReverseBitOrder();
 int pow_int(int a, int b);
+int reverseBitOrder(unsigned int n, unsigned int bit_len);
 
 int main() {
   printf("Hello there guys\n");
-  int n = 0b110100101;
-  int bit_len = 9;
+  return 0;
+}
+
+void testReverseBitOrder() {
+  unsigned int n = 0b110100101;
+  unsigned int bit_len = 9;
+  unsigned int reversed = reverseBitOrder(n, bit_len);
+  printf("intput: %d\n", n);
+  printf("reversed bit order: %d\n", reversed);
+}
+
+int reverseBitOrder(unsigned int n, unsigned int bit_len) {
   int n_bit = pow_int(2, bit_len);
   int reversed_bit = 1;
   int reversed = 0;
@@ -23,8 +35,7 @@ int main() {
     reversed += is_bit_enabled * reversed_bit;
     n -= is_bit_enabled * n_bit;
   }
-  printf("\nThe reversed number is %d", reversed);
-  return 0;
+  return reversed;
 }
 
 int pow_int(int a, int b) {
