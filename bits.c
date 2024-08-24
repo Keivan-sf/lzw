@@ -8,11 +8,6 @@ void testReverseBitOrder();
 int pow_int(int a, int b);
 int reverseBitOrder(unsigned int n, unsigned int bit_len);
 
-int main() {
-  printf("Hello there guys\n");
-  return 0;
-}
-
 void testReverseBitOrder() {
   unsigned int n = 0b110100101;
   unsigned int bit_len = 9;

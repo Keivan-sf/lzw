@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "chars.h"
 
 int number_of_symbols = 0;
 struct symbolEntry {
@@ -34,20 +35,6 @@ int getSymbolNumber(char *ch) {
 void addSymbol(char *ch) {
   symbol_table[number_of_symbols] = ch;
   number_of_symbols++;
-}
-
-void input() {
-  char ch;
-  while ((ch = getchar()) != EOF) {
-    printf("%c", ch);
-  }
-}
-
-char *concat(const char *str1, const char *str2) {
-  char *result = malloc(strlen(str1) + strlen(str2) + 1);
-  strcpy(result, str1);
-  strcat(result, str2);
-  return result;
 }
 
 void fillSymbolTableTill256() {
@@ -84,17 +71,6 @@ void printSymbolsAfter256() {
     free(ch);
   }
   printf("--\n");
-}
-
-char *concatCharToStr(const char *str, const char c) {
-  int current_str_len = strlen(str);
-  char *result = malloc((current_str_len + 2) * sizeof(char));
-  for (int i = 0; i < current_str_len; i++) {
-    result[i] = str[i];
-  }
-  result[current_str_len] = c;
-  result[current_str_len + 1] = 0;
-  return result;
 }
 
 int main() {
