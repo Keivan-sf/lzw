@@ -22,7 +22,7 @@ int getSymbolValue(unsigned int symbol, char **result) {
   }
 }
 
-int getSymbolNumber(char *ch) {
+unsigned int getSymbolNumber(char *ch) {
   for (int i = 0; i < number_of_symbols; i++) {
     if (i == 256)
       continue;
@@ -80,40 +80,44 @@ int main() {
   char ch;
 
   if ((ch = getchar()) != EOF) {
-    printf("first char: %c\n\n", ch);
+    // printf("curr: %c %d\n", ch, ch);
     char *tempWorking = workingData;
     workingData[0] = ch;
     workingData[1] = 0;
   }
 
-  printf("working: %s\n", workingData);
+  // printf("working: %s\n", workingData);
 
   while ((ch = getchar()) != EOF) {
-    printf("curr: %c\n", ch);
+    // printf("curr: %c %d\n", ch, ch);
     char *arg = concatCharToStr(workingData, ch);
-    printf("arg: %s\n", arg);
+    // printf("arg: %s\n", arg);
     int idx = 0;
     if ((idx = getSymbolNumber(arg)) > 0) {
-      printf("symbol exists in list\n");
       free(workingData);
       workingData = arg;
     } else {
       addSymbol(arg);
-      printf("> out: %d \n", getSymbolNumber(workingData));
+      writeToOutputArray(getSymbolNumber(workingData), 9);
       char *currentChar = malloc(2 * sizeof(char));
       currentChar[0] = ch;
       currentChar[1] = 0;
       free(workingData);
       workingData = currentChar;
     }
-    printf("\n\nworking: %s\n", workingData);
-    printSymbolsAfter256();
+    // printf("\n\nworking: %s\n", workingData);
+    // printSymbolsAfter256();
   }
 
   if (strlen(workingData) > 0) {
-    printf("\n> last output: %d \n", getSymbolNumber(workingData));
+    // printf("\n> last output: %s %d\n", workingData,
+    // getSymbolNumber(workingData));
+    writeToOutputArray(getSymbolNumber(workingData), 9);
   }
+  writeOutputArrayToStdOut();
 }
+
+int _main() { testIO(); }
 
 void _testfunction() {
   for (int i = 0; i < 10; i++) {
