@@ -114,6 +114,7 @@ int main() {
     // getSymbolNumber(workingData));
     writeToOutputArray(getSymbolNumber(workingData), 9);
   }
+  writeLZWPrefixToStdOut();
   writeOutputArrayToStdOut();
 }
 
