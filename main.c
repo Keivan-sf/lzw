@@ -80,18 +80,13 @@ int main() {
   char ch;
 
   if ((ch = getchar()) != EOF) {
-    // printf("curr: %c %d\n", ch, ch);
     char *tempWorking = workingData;
     workingData[0] = ch;
     workingData[1] = 0;
   }
 
-  // printf("working: %s\n", workingData);
-
   while ((ch = getchar()) != EOF) {
-    // printf("curr: %c %d\n", ch, ch);
     char *arg = concatCharToStr(workingData, ch);
-    // printf("arg: %s\n", arg);
     int idx = 0;
     if ((idx = getSymbolNumber(arg)) > 0) {
       free(workingData);
@@ -105,13 +100,9 @@ int main() {
       free(workingData);
       workingData = currentChar;
     }
-    // printf("\n\nworking: %s\n", workingData);
-    // printSymbolsAfter256();
   }
 
   if (strlen(workingData) > 0) {
-    // printf("\n> last output: %s %d\n", workingData,
-    // getSymbolNumber(workingData));
     writeToOutputArray(getSymbolNumber(workingData), 9);
   }
   writeLZWPrefixToStdOut();
