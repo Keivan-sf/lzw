@@ -1,12 +1,18 @@
+#include "symbol_table.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "symbol_table.h"
 
 int number_of_symbols = 0;
+int symbol_table_size = 0;
+char **symbol_table;
 
-char *symbol_table[1000];
+void copyCharPointerArrayToAnother(char **src, char **dest, int old_len) {
+  for (int i = 0; i < old_len; i++) {
+    dest[i] = src[i];
+  }
+}
 
 int getSymbolValue(unsigned int symbol, char **result) {
   if (symbol >= number_of_symbols) {
@@ -29,6 +35,15 @@ unsigned int getSymbolNumber(char *ch) {
 }
 
 void addSymbol(char *ch) {
+  if (symbol_table_size < number_of_symbols + 2) {
+    char **new_symbol_table =
+        malloc((symbol_table_size + 300) * sizeof(char *));
+    copyCharPointerArrayToAnother(symbol_table, new_symbol_table,
+                                  symbol_table_size);
+    symbol_table_size += 300;
+    free(symbol_table);
+    symbol_table = new_symbol_table;
+  }
   symbol_table[number_of_symbols] = ch;
   number_of_symbols++;
 }
