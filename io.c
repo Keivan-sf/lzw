@@ -23,8 +23,8 @@ void writeToOutputArray(unsigned int data, unsigned int bits_len) {
 }
 
 void writeOutputArrayToStdOut() {
-  int len = pos / 8 + (pos % 8 > 0);
   reverseOutputArrayBits();
+  int len = pos / 8 + (pos % 8 > 0);
   for (int i = 0; i < len; i++) {
     printf("%c", output[i]);
   }
