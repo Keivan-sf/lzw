@@ -36,3 +36,10 @@ void reverseOutputArrayBits() {
     output[i] = reverseBitOrder(output[i], 8);
   }
 }
+
+void writeLZWPrefixToStdOut() {
+  uint8_t prefix[3] = {0x1f, 0x9d, 0x90};
+  for (int i = 0; i < 3; i++) {
+    putchar(prefix[i]);
+  }
+}
