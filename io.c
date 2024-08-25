@@ -4,6 +4,7 @@
 
 uint8_t output[10000];
 unsigned int pos = 0;
+void reverseOutputArrayBits();
 
 void testIO() {
   writeToOutputArray(98, 9);
@@ -23,7 +24,15 @@ void writeToOutputArray(unsigned int data, unsigned int bits_len) {
 
 void writeOutputArrayToStdOut() {
   int len = pos / 8 + (pos % 8 > 0);
+  reverseOutputArrayBits();
   for (int i = 0; i < len; i++) {
     printf("%c", output[i]);
+  }
+}
+
+void reverseOutputArrayBits() {
+  int len = pos / 8 + (pos % 8 > 0);
+  for (int i = 0; i < len; i++) {
+    output[i] = reverseBitOrder(output[i], 8);
   }
 }
