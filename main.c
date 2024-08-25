@@ -11,7 +11,6 @@ int main() {
   char ch;
 
   if ((ch = getchar()) != EOF) {
-    char *tempWorking = workingData;
     workingData[0] = ch;
     workingData[1] = 0;
   }
