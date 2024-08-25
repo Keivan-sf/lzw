@@ -10,7 +10,7 @@ $(LINKERS): $(SOURCES)
 	gcc -c $(subst .obj,., $(@:.o=.c)) -o $@
 
 build:
-	gcc $(LINKERS)
+	gcc $(LINKERS) -o lzw
 
 clean:
 	rm -rf .obj
