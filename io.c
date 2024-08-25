@@ -50,7 +50,7 @@ void writeOutputArrayToStdOut() {
 void reverseOutputArrayBits() {
   int len = getLen();
   for (int i = 0; i < len; i++) {
-    output[i] = reverseBitOrder(output[i], 8);
+    output[i] = reverseUint8BitOrder(output[i]);
   }
 }
 

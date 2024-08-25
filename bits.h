@@ -4,3 +4,5 @@
 int writeBitsToUint8Array(unsigned int n, unsigned int bit_len,
                           unsigned int currentPos, uint8_t *output);
 int reverseBitOrder(unsigned int n, unsigned int bit_len);
+
+uint8_t reverseUint8BitOrder(uint8_t);

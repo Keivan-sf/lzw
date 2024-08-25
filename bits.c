@@ -8,6 +8,13 @@ void testReverseBitOrder();
 int pow_int(int a, int b);
 int reverseBitOrder(unsigned int n, unsigned int bit_len);
 
+uint8_t reverseUint8BitOrder(uint8_t n) {
+  n = (n & 0xF0) >> 4 | (n & 0x0F) << 4;
+  n = (n & 0xCC) >> 2 | (n & 0x33) << 2;
+  n = (n & 0xAA) >> 1 | (n & 0x55) << 1;
+  return n;
+}
+
 void testReverseBitOrder() {
   unsigned int n = 0b110100101;
   unsigned int bit_len = 9;
