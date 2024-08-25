@@ -117,39 +117,3 @@ int main() {
   writeLZWPrefixToStdOut();
   writeOutputArrayToStdOut();
 }
-
-int _main() { testIO(); }
-
-void _testfunction() {
-  for (int i = 0; i < 10; i++) {
-    char b[2] = "";
-    sprintf(b, "%d", i);
-    char *ch = concat("reset , ", b);
-    symbol_table[i] = ch;
-    number_of_symbols++;
-  }
-
-  for (unsigned int i = 0; i < 10; i++) {
-    // char * ch = symbol_table[i];
-    char **ch = malloc(sizeof(char *));
-    int result = 0;
-    if ((result = getSymbolValue(i, ch)) >= 0) {
-      printf("%d: %s\n", i, *ch);
-    }
-    free(ch);
-  }
-
-  //
-  // for(unsigned int i = 0; i < 10; i++) {
-  //   int result = 0;
-  //
-  //   char b[2] = "";
-  //   sprintf(b, "%d" , i);
-  //   char* ch = concat("reset , " , b);
-  //
-  //   if((result = getSymbolNumber(ch)) > -1) {
-  //     printf("%d: %s\n", result , ch);
-  //   }
-  //   free(ch);
-  // }
-}
