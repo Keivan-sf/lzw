@@ -15,11 +15,9 @@ void testIO() {
   writeOutputArrayToStdOut();
 }
 
-int gI = 0;
 void writeToOutputArray(unsigned int data, unsigned int bits_len) {
   int reversed = reverseBitOrder(data, bits_len);
   pos = writeBitsToUint8Array(reversed, bits_len, pos, output);
-  gI++;
 }
 
 void writeOutputArrayToStdOut() {
