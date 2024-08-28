@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 unsigned int outputSize = 0;
-uint8_t *output;
+uint8_t output[1000000];
 unsigned int pos = 0;
 void reverseOutputArrayBits();
 
@@ -26,14 +26,14 @@ void testIO() {
 }
 
 void writeToOutputArray(unsigned int data, unsigned int bits_len) {
-  int neededSize = getLen() + bits_len / 8 + 2;
-  if (outputSize < neededSize) {
-    uint8_t *new_output = malloc(outputSize + 100);
-    copyUintArrayToAnother(output, new_output, outputSize);
-    outputSize += 100;
-    free(output);
-    output = new_output;
-  }
+  // int neededSize = getLen() + bits_len / 8 + 2;
+  // if (outputSize < neededSize) {
+  //   uint8_t *new_output = malloc(outputSize + 100);
+  //   copyUintArrayToAnother(output, new_output, outputSize);
+  //   outputSize += 100;
+  //   free(output);
+  //   output = new_output;
+  // }
 
   int reversed = reverseBitOrder(data, bits_len);
   pos = writeBitsToUint8Array(reversed, bits_len, pos, output);

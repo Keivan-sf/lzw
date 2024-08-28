@@ -4,6 +4,7 @@
 #include <string.h>
 
 int getSymbolValue(unsigned int symbol, char **result);
+int getNumberOfSymbols();
 
 unsigned int getSymbolNumber(char *ch);
 
@@ -14,3 +15,5 @@ void fillSymbolTableTill256();
 void printSymbolsTill256();
 
 void printSymbolsAfter256();
+
+void initiateSymbolTable();

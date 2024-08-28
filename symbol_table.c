@@ -6,7 +6,14 @@
 
 int number_of_symbols = 0;
 int symbol_table_size = 0;
-char **symbol_table;
+// char **symbol_table;
+char *symbol_table[100000];
+
+void initiateSymbolTable() {
+  // char **symbol_table = (char **)malloc(10 * sizeof(char *));
+}
+
+int getNumberOfSymbols() { return number_of_symbols; }
 
 void copyCharPointerArrayToAnother(char **src, char **dest, int old_len) {
   for (int i = 0; i < old_len; i++) {
@@ -35,15 +42,14 @@ unsigned int getSymbolNumber(char *ch) {
 }
 
 void addSymbol(char *ch) {
-  if (symbol_table_size < number_of_symbols + 2) {
-    char **new_symbol_table =
-        malloc((symbol_table_size + 300) * sizeof(char *));
-    copyCharPointerArrayToAnother(symbol_table, new_symbol_table,
-                                  symbol_table_size);
-    symbol_table_size += 300;
-    free(symbol_table);
-    symbol_table = new_symbol_table;
-  }
+  // if (symbol_table_size < number_of_symbols + 10) {
+  //   char **new_symbol_table = malloc((symbol_table_size + 10) * sizeof(char *));
+  //   copyCharPointerArrayToAnother(symbol_table, new_symbol_table,
+  //                                 symbol_table_size);
+  //   symbol_table_size += 10;
+  //   free(symbol_table);
+  //   symbol_table = new_symbol_table;
+  // }
   symbol_table[number_of_symbols] = ch;
   number_of_symbols++;
 }
@@ -72,12 +78,12 @@ void printSymbolsTill256() {
 }
 
 void printSymbolsAfter256() {
-  printf("-- | ");
+  printf("-- ");
   for (unsigned int j = 257; j < number_of_symbols; j++) {
     char **ch = malloc(sizeof(char *));
     int result = 0;
     if ((result = getSymbolValue(j, ch)) >= 0) {
-      printf("%s | ", *ch);
+      printf("%d: %s\n", j, *ch);
     }
     free(ch);
   }
