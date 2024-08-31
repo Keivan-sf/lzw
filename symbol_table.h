@@ -6,7 +6,7 @@
 int getSymbolValue(unsigned int symbol, char **result);
 int getNumberOfSymbols();
 
-unsigned int getSymbolNumber(char *ch);
+int getSymbolNumber(char *ch);
 
 void addSymbol(char *ch);
 

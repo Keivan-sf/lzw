@@ -30,7 +30,7 @@ int getSymbolValue(unsigned int symbol, char **result) {
   }
 }
 
-unsigned int getSymbolNumber(char *ch) {
+int getSymbolNumber(char *ch) {
   for (int i = 0; i < number_of_symbols; i++) {
     if (i == 256)
       continue;

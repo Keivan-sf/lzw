@@ -18,8 +18,7 @@ int main() {
 
   while ((ch = getchar()) != EOF) {
     char *arg = concatCharToStr(workingData, ch);
-    int idx = 0;
-    if ((idx = getSymbolNumber(arg)) > 0) {
+    if (getSymbolNumber(arg) >= 0) {
       free(workingData);
       workingData = arg;
     } else {
