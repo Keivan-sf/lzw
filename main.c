@@ -6,6 +6,7 @@
 #include <string.h>
 
 int main() {
+  initOutput();
   fillSymbolTableTill256();
   char *workingData = malloc(2 * sizeof(char));
   char ch;
