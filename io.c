@@ -25,12 +25,22 @@ void testIO() {
   writeOutputArrayToStdOut();
 }
 
-void initOutput() { output = malloc(1 * sizeof(char)); }
+void initOutput() {
+  output = malloc(1 * sizeof(uint8_t));
+  output[0] = 0;
+}
+
+void initializeWithZeros(int start, int end, uint8_t *output) {
+  for (; start < end; start++) {
+    output[start] = 0;
+  }
+}
 
 void writeToOutputArray(unsigned int data, unsigned int bits_len) {
   int neededSize = getLen() + bits_len / 8 + 2;
   if (outputSize < neededSize) {
     output = realloc(output, outputSize + 100);
+    initializeWithZeros(outputSize, outputSize + 100, output);
     outputSize += 100;
   }
 
