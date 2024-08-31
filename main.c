@@ -7,6 +7,7 @@
 
 int main() {
   initOutput();
+  initiateSymbolTable();
   fillSymbolTableTill256();
   char *workingData = malloc(2 * sizeof(char));
   char ch;
@@ -24,6 +25,7 @@ int main() {
     } else {
       addSymbol(arg);
       writeToOutputArray(getSymbolNumber(workingData), 9);
+      // printf("%d ", getSymbolNumber(workingData));
       char *currentChar = malloc(2 * sizeof(char));
       currentChar[0] = ch;
       currentChar[1] = 0;
@@ -34,7 +36,10 @@ int main() {
 
   if (strlen(workingData) > 0) {
     writeToOutputArray(getSymbolNumber(workingData), 9);
+    // printf("%d ", getSymbolNumber(workingData));
   }
+  // printSymbolsTill256();
+  // printSymbolsAfter256();
   writeLZWPrefixToStdOut();
   writeOutputArrayToStdOut();
 }

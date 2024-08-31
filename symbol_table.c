@@ -5,12 +5,17 @@
 #include <string.h>
 
 int number_of_symbols = 0;
-int symbol_table_size = 0;
-// char **symbol_table;
-char *symbol_table[100000];
+int symbol_table_size = 2;
+char **symbol_table;
+// char *symbol_table[100000];
+//
 
 void initiateSymbolTable() {
-  // char **symbol_table = (char **)malloc(10 * sizeof(char *));
+  symbol_table = malloc(symbol_table_size * sizeof(char *));
+  if (!symbol_table) {
+    perror("Failed to allocate memory");
+    exit(EXIT_FAILURE);
+  }
 }
 
 int getNumberOfSymbols() { return number_of_symbols; }
@@ -42,14 +47,20 @@ int getSymbolNumber(char *ch) {
 }
 
 void addSymbol(char *ch) {
-  // if (symbol_table_size < number_of_symbols + 10) {
-  //   char **new_symbol_table = malloc((symbol_table_size + 10) * sizeof(char *));
-  //   copyCharPointerArrayToAnother(symbol_table, new_symbol_table,
-  //                                 symbol_table_size);
-  //   symbol_table_size += 10;
-  //   free(symbol_table);
-  //   symbol_table = new_symbol_table;
-  // }
+  if (symbol_table_size < number_of_symbols + 1) {
+    // printf("before if:\n");
+    // printSymbolsTill256();
+    // printSymbolsAfter256();
+    char **new_symbol_table = malloc((symbol_table_size + 2) * sizeof(char *));
+    copyCharPointerArrayToAnother(symbol_table, new_symbol_table,
+                                  symbol_table_size);
+    symbol_table_size += 2;
+    free(symbol_table);
+    symbol_table = new_symbol_table;
+    // printf("after if:\n");
+    // printSymbolsTill256();
+    // printSymbolsAfter256();
+  }
   symbol_table[number_of_symbols] = ch;
   number_of_symbols++;
 }
@@ -78,14 +89,15 @@ void printSymbolsTill256() {
 }
 
 void printSymbolsAfter256() {
-  printf("-- ");
   for (unsigned int j = 257; j < number_of_symbols; j++) {
     char **ch = malloc(sizeof(char *));
     int result = 0;
     if ((result = getSymbolValue(j, ch)) >= 0) {
+      // printf("%d: %s{}", j, *ch);
       printf("%d: %s\n", j, *ch);
     }
     free(ch);
   }
-  printf("--\n");
+  printf("-- \n");
+  // printf(";;\n");
 }
