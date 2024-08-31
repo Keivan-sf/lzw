@@ -28,6 +28,7 @@ void testIO() {
 void initOutput() {
   output = malloc(1 * sizeof(uint8_t));
   output[0] = 0;
+  outputSize = 1;
 }
 
 void initializeWithZeros(int start, int end, uint8_t *output) {
