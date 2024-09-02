@@ -2,6 +2,7 @@
 #include "bits.h"
 #include <stdint.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 unsigned int outputSize = 0;
 uint8_t *output;
@@ -38,6 +39,7 @@ void initializeWithZeros(int start, int end, uint8_t *output) {
 }
 
 void writeToOutputArray(unsigned int data, unsigned int bits_len) {
+  // printf("%u\n", data);
   int neededSize = getLen() + bits_len / 8 + 2;
   if (outputSize < neededSize) {
     output = realloc(output, outputSize + 100);
@@ -53,7 +55,12 @@ void writeOutputArrayToStdOut() {
   reverseOutputArrayBits();
   int len = getLen();
   for (int i = 0; i < len; i++) {
-    putchar(output[i]);
+    // char buffer[1];
+    // buffer[0] = output[i];
+    fflush(stdout);
+    write(STDOUT_FILENO, output + i, 1);
+    fflush(stdout);
+    // putchar(output[i]);
   }
 }
 
