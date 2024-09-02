@@ -97,7 +97,7 @@ void compress() {
     } else {
       addSymbol(arg);
       int symbolNumber = getSymbolNumber(workingData);
-      if (getNumberOfSymbols() > pow_int(2, output_bits) + 2) {
+      if (getNumberOfSymbols() > pow_int(2, output_bits) + 1) {
         output_bits++;
       }
       writeToOutputArray(symbolNumber, output_bits);
