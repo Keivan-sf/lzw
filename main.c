@@ -38,7 +38,28 @@ void parseInput() {
     reversed_input[i] = 0;
     reversed_input[i] = reverseUint8BitOrder(input[i]);
   }
-  printf("%s", reversed_input);
+
+  unsigned int n = 9;
+  unsigned int number_of_9_bits = 0;
+  unsigned int separated_nbits[number_of_chars];
+  for (unsigned int pos = 0; pos < number_of_chars * 8; pos++) {
+    unsigned int number = reversed_input[pos / 8];
+    unsigned int pos_in_8bit = pos % 8;
+    unsigned int pos_in_nbit = pos % n;
+    unsigned int index_in_nbit = pos / n;
+    if (pos_in_nbit == 0) {
+      separated_nbits[index_in_nbit] = 0;
+      number_of_9_bits++;
+    }
+    uint8_t indicator = 128 >> pos_in_8bit;
+    printf("the indicator is %d\n", indicator);
+    unsigned int is_bit_enabled = (indicator & number) > 0;
+    separated_nbits[index_in_nbit] += pow_int(2, pos_in_nbit) * is_bit_enabled;
+  }
+
+  for (int i = 0; i < number_of_9_bits; i++) {
+    printf(" %u ", separated_nbits[i]);
+  }
 }
 
 void compress() {
