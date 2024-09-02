@@ -4,8 +4,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+void compress();
+void decompress();
 
-int main() {
+int main(int argc, char *argv[]) {
+  char d_flag[3] = "-d";
+  for (int i = 0; i < argc; i++) {
+    if (strcmp(argv[i], d_flag) == 0) {
+      printf("The arg is: %s", argv[i]);
+    }
+  }
+  return 0;
+}
+
+void decompress() { printf("in the decompress method"); }
+
+void compress() {
   initOutput();
   initiateSymbolTable();
   fillSymbolTableTill256();
