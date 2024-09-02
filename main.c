@@ -5,19 +5,31 @@
 #include <stdlib.h>
 #include <string.h>
 void compress();
-void decompress();
+void parseInput();
 
 int main(int argc, char *argv[]) {
-  char d_flag[3] = "-d";
+  char parse_flag[3] = "-p";
   for (int i = 0; i < argc; i++) {
-    if (strcmp(argv[i], d_flag) == 0) {
-      printf("The arg is: %s", argv[i]);
+    if (strcmp(argv[i], parse_flag) == 0) {
+      parseInput();
+      return 0;
     }
   }
+  compress();
   return 0;
 }
 
-void decompress() { printf("in the decompress method"); }
+void parseInput() {
+  uint8_t input[10000];
+  int number_of_chars = 0;
+  char ch;
+  while ((ch = getchar()) != EOF) {
+    input[number_of_chars] = ch;
+    number_of_chars++;
+  }
+
+  printf("%s", input);
+}
 
 void compress() {
   initOutput();
