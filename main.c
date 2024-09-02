@@ -10,6 +10,11 @@
 void compress();
 void parseInput();
 
+int _main() {
+  // testWriteBitsToUint8Array2();
+  testReverseBitOrder2();
+}
+
 int main(int argc, char *argv[]) {
   char parse_flag[3] = "-p";
   for (int i = 0; i < argc; i++) {
@@ -57,11 +62,17 @@ void parseInput() {
     uint8_t indicator = 128 >> pos_in_8bit;
     unsigned int is_bit_enabled = (indicator & number) > 0;
     separated_nbits[index_in_nbit] += pow_int(2, pos_in_nbit) * is_bit_enabled;
+    if (pos_in_nbit == 8) {
+      printf("writing %d\n", separated_nbits[index_in_nbit]);
+    }
   }
 
   for (int i = 0; i < number_of_9_bits; i++) {
     // printf(" %d ", i);
-    printf("%u\n", separated_nbits[i]);
+    // fflush(stdin);
+    // fflush(stdout);
+    // write(STDOUT_FILENO, str, num_of_digits + 1);
+    // printf("%u\n", separated_nbits[i]);
   }
 }
 
@@ -70,24 +81,28 @@ void compress() {
   initiateSymbolTable();
   fillSymbolTableTill256();
   char *workingData = malloc(2 * sizeof(char));
-  char ch;
-
-  if ((ch = getchar()) != EOF) {
-    workingData[0] = ch;
+  char chs[1];
+  int bytes_read = 0;
+  int output_bits = 9;
+  if ((bytes_read = read(STDIN_FILENO, chs, 1)) > 0) {
+    workingData[0] = chs[0];
     workingData[1] = 0;
   }
 
-  while ((ch = getchar()) != EOF) {
-    char *arg = concatCharToStr(workingData, ch);
+  while ((bytes_read = read(STDIN_FILENO, chs, 1)) > 0) {
+    char *arg = concatCharToStr(workingData, chs[0]);
     if (getSymbolNumber(arg) >= 0) {
       free(workingData);
       workingData = arg;
     } else {
       addSymbol(arg);
-      writeToOutputArray(getSymbolNumber(workingData), 9);
-      // printf("%d ", getSymbolNumber(workingData));
+      int symbolNumber = getSymbolNumber(workingData);
+      if (getNumberOfSymbols() > pow_int(2, output_bits) + 2) {
+        output_bits++;
+      }
+      writeToOutputArray(symbolNumber, output_bits);
       char *currentChar = malloc(2 * sizeof(char));
-      currentChar[0] = ch;
+      currentChar[0] = chs[0];
       currentChar[1] = 0;
       free(workingData);
       workingData = currentChar;
