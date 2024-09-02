@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+
 void compress();
 void parseInput();
 
@@ -21,15 +23,16 @@ int main(int argc, char *argv[]) {
 }
 
 void parseInput() {
-  uint8_t input[10000];
+  uint8_t input[100000];
   int number_of_chars = 0;
   int iterations = 0;
-  char ch;
-  while ((ch = getchar()) != EOF) {
+  char chs[1];
+  int bytes_read = 0;
+  while ((bytes_read = read(STDIN_FILENO, chs, 1)) > 0) {
     iterations++;
     if (iterations < 4)
       continue;
-    input[number_of_chars] = ch;
+    input[number_of_chars] = chs[0];
     number_of_chars++;
   }
 
@@ -52,13 +55,13 @@ void parseInput() {
       number_of_9_bits++;
     }
     uint8_t indicator = 128 >> pos_in_8bit;
-    printf("the indicator is %d\n", indicator);
     unsigned int is_bit_enabled = (indicator & number) > 0;
     separated_nbits[index_in_nbit] += pow_int(2, pos_in_nbit) * is_bit_enabled;
   }
 
   for (int i = 0; i < number_of_9_bits; i++) {
-    printf(" %u ", separated_nbits[i]);
+    // printf(" %d ", i);
+    printf("%u\n", separated_nbits[i]);
   }
 }
 
