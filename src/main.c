@@ -10,11 +10,6 @@
 void compress();
 void parseInput();
 
-int _main() {
-  // testWriteBitsToUint8Array2();
-  testReverseBitOrder2();
-}
-
 int main(int argc, char *argv[]) {
   char parse_flag[3] = "-p";
   for (int i = 0; i < argc; i++) {
