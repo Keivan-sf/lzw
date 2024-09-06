@@ -55,12 +55,7 @@ void writeOutputArrayToStdOut() {
   reverseOutputArrayBits();
   int len = getLen();
   for (int i = 0; i < len; i++) {
-    // char buffer[1];
-    // buffer[0] = output[i];
-    fflush(stdout);
-    write(STDOUT_FILENO, output + i, 1);
-    fflush(stdout);
-    // putchar(output[i]);
+    printf("%c", output[i]);
   }
 }
 
