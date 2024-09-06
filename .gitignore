@@ -2,3 +2,4 @@ lzw
 bits
 .obj
 unit-tests
+.test-obj
