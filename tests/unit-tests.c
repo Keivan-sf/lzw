@@ -2,6 +2,24 @@
 #include "../src/io.h"
 #include "./libtap/tap.h"
 
+void test_write_bits_to_uint_array_at_nonzero_starting_point() {
+  uint8_t output[1000];
+  for (int i = 0; i < 1000; i++) {
+    output[i] = 0;
+  }
+  output[0] = output[0] | 0b11000000;
+
+  unsigned int currentPos = 2;
+  unsigned int n = 0b11101110010001010110;
+  unsigned int bit_len = 20;
+  writeBitsToUint8Array(n, bit_len, currentPos, output);
+  int is_ok = 1;
+  is_ok = is_ok && output[0] == 0b11111011;
+  is_ok = is_ok && output[1] == 0b10010001;
+  is_ok = is_ok && output[2] == 0b01011000;
+  ok(is_ok, "Should write 20bit chunk starting at position 2 to uint8 array");
+}
+
 int main() {
   unsigned int n9[] = {0b110100101, 0b011100101, 0b110110101, 0b100100001};
   unsigned int n9r[] = {0b101001011, 0b101001110, 0b101011011, 0b100001001};
@@ -46,24 +64,7 @@ int main() {
     }
   }
   ok(is_output_array_ok, "Should write variable bit chunks to uint8 array");
-
+  test_write_bits_to_uint_at_nonzero_starting_point();
   done_testing();
   return 0;
-}
-
-void testWriteBitsToUint8Array() {
-  uint8_t output[1000];
-  for (int i = 0; i < 1000; i++) {
-    output[i] = 0;
-  }
-  output[0] = output[0] | 0b11000000;
-
-  unsigned int currentPos = 2;
-  unsigned int n = 0b11101110010001010110;
-  unsigned int bit_len = 20;
-  writeBitsToUint8Array(n, bit_len, currentPos, output);
-  printf("\noutput[0]: %d", output[0]);
-  printf("\noutput[1]: %d", output[1]);
-  printf("\noutput[2]: %d", output[2]);
-  printf("\noutput[3]: %d", output[3]);
 }
