@@ -64,7 +64,7 @@ int main() {
     }
   }
   ok(is_output_array_ok, "Should write variable bit chunks to uint8 array");
-  test_write_bits_to_uint_at_nonzero_starting_point();
+  test_write_bits_to_uint_array_at_nonzero_starting_point();
   done_testing();
   return 0;
 }
