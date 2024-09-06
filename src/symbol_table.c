@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-int number_of_symbols = 0;
-int symbol_table_size = 2;
+unsigned int number_of_symbols = 0;
+unsigned int symbol_table_size = 2;
 unsigned int symbol_table_reallocation_chunk = 100;
 char **symbol_table;
 
