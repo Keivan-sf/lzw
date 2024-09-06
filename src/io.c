@@ -36,7 +36,7 @@ void writeToOutputArray(unsigned int data, unsigned int bits_len) {
     output = realloc(output, outputSize + ouput_reallocation_chunk_size);
     initializeWithZeros(outputSize, outputSize + ouput_reallocation_chunk_size,
                         output);
-    outputSize += 100;
+    outputSize += ouput_reallocation_chunk_size;
   }
 
   int reversed = reverseBitOrder(data, bits_len);
