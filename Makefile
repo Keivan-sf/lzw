@@ -13,7 +13,7 @@ build:
 	gcc $(LINKERS) -o lzw
 
 unit-test: 
-	gcc ./tests/unit-tests.c -o unit-tests && ./unit-tests 
+	gcc ./tests/unit-tests.c ./tests/libtap/tap.c -o unit-tests && ./unit-tests 
 
 clean:
 	rm -rf .obj
