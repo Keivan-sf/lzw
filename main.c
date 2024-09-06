@@ -110,7 +110,7 @@ void compress() {
   }
 
   if (strlen(workingData) > 0) {
-    writeToOutputArray(getSymbolNumber(workingData), 9);
+    writeToOutputArray(getSymbolNumber(workingData), output_bits);
     // printf("%d ", getSymbolNumber(workingData));
   }
   // printSymbolsTill256();
