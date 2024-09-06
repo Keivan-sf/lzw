@@ -12,16 +12,16 @@ uint8_t reverseUint8BitOrder(uint8_t n) {
   return n;
 }
 
-unsigned reverseBitOrder(unsigned int n, unsigned int bit_len) {
-  int n_bit = pow_int(2, bit_len);
-  int reversed_bit = 1;
-  int reversed = 0;
+unsigned int reverseBitOrder(unsigned int n, unsigned int bit_len) {
+  unsigned int n_bit = pow_int(2, bit_len);
+  unsigned int reversed_bit = 1;
+  unsigned int reversed = 0;
   for (int i = 0; i < bit_len; i++) {
     if (n == 0) {
       break;
     }
-    n_bit = pow_int(2, bit_len - 1 - i);
-    reversed_bit = pow_int(2, i);
+    n_bit = n_bit >> 1;
+    reversed_bit = 1 << i;
     int is_bit_enabled = n >= n_bit;
     reversed += is_bit_enabled * reversed_bit;
     n -= is_bit_enabled * n_bit;
