@@ -1,5 +1,5 @@
 ## LZW
-LZW implementation in C compatible with linux ncompress program.
+LZW data compression implementation in C compatible with [ncompress](https://vapier.github.io/ncompress/).
 
 This is a hobby project under development
 
@@ -12,7 +12,7 @@ then run the executable to compress `input.txt` and write the compressed data to
 ```
 cat ./input.txt | ./lzw > ./compressed.Z
 ```
-`compressed.Z` can now be decompressed using ncompress. For example:
+`compressed.Z` can now be decompressed using [ncompress](https://vapier.github.io/ncompress/). For example:
 ```
 cat compressed.Z | compress -d
 ```
