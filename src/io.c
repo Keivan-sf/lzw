@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 unsigned int outputSize = 0;
+unsigned int ouput_reallocation_chunk_size = 100;
 uint8_t *output;
 unsigned int pos = 0;
 void reverseOutputArrayBits();
@@ -32,8 +33,9 @@ void initializeWithZeros(int start, int end, uint8_t *output) {
 void writeToOutputArray(unsigned int data, unsigned int bits_len) {
   int neededSize = getLen() + bits_len / 8 + 2;
   if (outputSize < neededSize) {
-    output = realloc(output, outputSize + 100);
-    initializeWithZeros(outputSize, outputSize + 100, output);
+    output = realloc(output, outputSize + ouput_reallocation_chunk_size);
+    initializeWithZeros(outputSize, outputSize + ouput_reallocation_chunk_size,
+                        output);
     outputSize += 100;
   }
 
