@@ -63,11 +63,7 @@ void parseInput() {
   }
 
   for (int i = 0; i < number_of_9_bits; i++) {
-    // printf(" %d ", i);
-    // fflush(stdin);
-    // fflush(stdout);
-    // write(STDOUT_FILENO, str, num_of_digits + 1);
-    // printf("%u\n", separated_nbits[i]);
+    printf("%u\n", separated_nbits[i]);
   }
 }
 
@@ -106,10 +102,7 @@ void compress() {
 
   if (strlen(workingData) > 0) {
     writeToOutputArray(getSymbolNumber(workingData), output_bits);
-    // printf("%d ", getSymbolNumber(workingData));
   }
-  // printSymbolsTill256();
-  // printSymbolsAfter256();
   writeLZWPrefixToStdOut();
   writeOutputArrayToStdOut();
 }

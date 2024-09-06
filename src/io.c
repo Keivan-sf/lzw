@@ -30,7 +30,6 @@ void initializeWithZeros(int start, int end, uint8_t *output) {
 }
 
 void writeToOutputArray(unsigned int data, unsigned int bits_len) {
-  // printf("%u\n", data);
   int neededSize = getLen() + bits_len / 8 + 2;
   if (outputSize < neededSize) {
     output = realloc(output, outputSize + 100);
