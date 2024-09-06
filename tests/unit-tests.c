@@ -20,7 +20,7 @@ void test_write_bits_to_uint_array_at_nonzero_starting_point() {
   ok(is_ok, "Should write 20bit chunk starting at position 2 to uint8 array");
 }
 
-int main() {
+void test_bit_reversal() {
   unsigned int n9[] = {0b110100101, 0b011100101, 0b110110101, 0b100100001};
   unsigned int n9r[] = {0b101001011, 0b101001110, 0b101011011, 0b100001001};
 
@@ -39,7 +39,9 @@ int main() {
     ok(reversed == n10r[j], "Should correctly reverse bit order for %u to %u",
        n10[j], n10r[j]);
   }
+}
 
+void test_write_bits_to_uint_array() {
   uint8_t output[1000];
   for (int i = 0; i < 1000; i++) {
     output[i] = 0;
@@ -64,7 +66,12 @@ int main() {
     }
   }
   ok(is_output_array_ok, "Should write variable bit chunks to uint8 array");
+}
+
+int main() {
+  test_bit_reversal();
   test_write_bits_to_uint_array_at_nonzero_starting_point();
+  test_write_bits_to_uint_array();
   done_testing();
   return 0;
 }
