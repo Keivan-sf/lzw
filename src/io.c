@@ -17,15 +17,6 @@ void copyUintArrayToAnother(uint8_t *src, uint8_t *dest, int old_len) {
   }
 }
 
-void testIO() {
-  writeToOutputArray(98, 9);
-  writeToOutputArray(97, 9);
-  writeToOutputArray(110, 9);
-  writeToOutputArray(258, 9);
-  writeToOutputArray(97, 9);
-  writeOutputArrayToStdOut();
-}
-
 void initOutput() {
   output = malloc(1 * sizeof(uint8_t));
   output[0] = 0;
