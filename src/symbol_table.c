@@ -6,6 +6,7 @@
 
 int number_of_symbols = 0;
 int symbol_table_size = 2;
+unsigned int symbol_table_reallocation_chunk = 100;
 char **symbol_table;
 
 void initiateSymbolTable() {
@@ -46,10 +47,11 @@ int getSymbolNumber(char *ch) {
 
 void addSymbol(char *ch) {
   if (symbol_table_size < number_of_symbols + 1) {
-    char **new_symbol_table = malloc((symbol_table_size + 2) * sizeof(char *));
+    char **new_symbol_table = malloc(
+        (symbol_table_size + symbol_table_reallocation_chunk) * sizeof(char *));
     copyCharPointerArrayToAnother(symbol_table, new_symbol_table,
                                   symbol_table_size);
-    symbol_table_size += 2;
+    symbol_table_size += symbol_table_reallocation_chunk;
     free(symbol_table);
     symbol_table = new_symbol_table;
   }
