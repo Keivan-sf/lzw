@@ -7,10 +7,11 @@
 #include <string.h>
 #include <unistd.h>
 
-void compress();
+void compress(unsigned int info_flag);
 void parseInput();
 
 int main(int argc, char *argv[]) {
+  unsigned int info_flag_enabled = 0;
   char parse_flag[3] = "-p";
   char info_flag[3] = "-i";
   for (int i = 0; i < argc; i++) {
@@ -22,7 +23,7 @@ int main(int argc, char *argv[]) {
       info_flag_enabled = 1;
     }
   }
-  compress();
+  compress(info_flag_enabled);
   return 0;
 }
 
@@ -71,7 +72,7 @@ void parseInput() {
   }
 }
 
-void compress() {
+void compress(unsigned int info_flag) {
   initOutput();
   initiateSymbolTable();
   fillSymbolTableTill256();
@@ -96,6 +97,9 @@ void compress() {
         output_bits++;
       }
       writeToOutputArray(symbolNumber, output_bits);
+      if (info_flag) {
+        printf("%d ", symbolNumber);
+      }
       char *currentChar = malloc(2 * sizeof(char));
       currentChar[0] = chs[0];
       currentChar[1] = 0;
@@ -106,7 +110,13 @@ void compress() {
 
   if (strlen(workingData) > 0) {
     writeToOutputArray(getSymbolNumber(workingData), output_bits);
+    if (info_flag) {
+      printf("%d ", getSymbolNumber(workingData));
+    }
   }
-  writeLZWPrefixToStdOut();
-  writeOutputArrayToStdOut();
+
+  if (!info_flag) {
+    writeLZWPrefixToStdOut();
+    writeOutputArrayToStdOut();
+  }
 }
