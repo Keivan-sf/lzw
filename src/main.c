@@ -12,9 +12,15 @@ void parseInput();
 
 int main(int argc, char *argv[]) {
   char parse_flag[3] = "-p";
+  char dev_flag[3] = "-d";
   for (int i = 0; i < argc; i++) {
     if (strcmp(argv[i], parse_flag) == 0) {
       parseInput();
+      return 0;
+    }
+
+    if (strcmp(argv[i], dev_flag) == 0) {
+      printf("dev flag is enabled\n");
       return 0;
     }
   }
