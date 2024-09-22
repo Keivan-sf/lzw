@@ -27,6 +27,27 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 
+void uncompress() {
+  uint8_t input[100000];
+  int number_of_chars = 0;
+  int iterations = 0;
+  char chs[1];
+  int bytes_read = 0;
+  while ((bytes_read = read(STDIN_FILENO, chs, 1)) > 0) {
+    iterations++;
+    if (iterations < 4)
+      continue;
+    input[number_of_chars] = chs[0];
+    number_of_chars++;
+  }
+
+  uint8_t reversed_input[number_of_chars];
+  for (int i = 0; i < number_of_chars; i++) {
+    reversed_input[i] = 0;
+    reversed_input[i] = reverseUint8BitOrder(input[i]);
+  }
+}
+
 void parseInput() {
   uint8_t input[100000];
   int number_of_chars = 0;
@@ -46,6 +67,8 @@ void parseInput() {
     reversed_input[i] = 0;
     reversed_input[i] = reverseUint8BitOrder(input[i]);
   }
+
+  // TODO: to uncompress its crucial to read from the reversed in 9bit (n_bint)
 
   unsigned int n = 9;
   unsigned int number_of_9_bits = 0;
