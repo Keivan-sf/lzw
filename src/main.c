@@ -38,6 +38,8 @@ int main(int argc, char *argv[]) {
 }
 
 void uncompress() {
+  initiateSymbolTable();
+  fillSymbolTableTill256();
   uint8_t input[100000];
   int number_of_chars = 0;
   int iterations = 0;
@@ -55,6 +57,22 @@ void uncompress() {
   for (int i = 0; i < number_of_chars; i++) {
     reversed_input[i] = 0;
     reversed_input[i] = reverseUint8BitOrder(input[i]);
+  }
+
+  unsigned int nbits[number_of_chars];
+  unsigned int current_margin = 9;
+  for (unsigned int bit_pos = 0;
+       bit_pos + current_margin < number_of_chars * 8;) {
+    unsigned int reversed_data =
+        readNBit(reversed_input, bit_pos, current_margin);
+    unsigned int data = reverseBitOrder(reversed_data, current_margin);
+    bit_pos += current_margin;
+    char **ch = malloc(sizeof(char *));
+    if (getSymbolValue(data, ch) > 0) {
+      printf("symbol found %s\n", *ch);
+    } else {
+      printf("symbol not found for %u\n", data);
+    }
   }
 }
 
