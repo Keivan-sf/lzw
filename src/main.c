@@ -7,12 +7,15 @@
 #include <string.h>
 #include <unistd.h>
 
+void uncompress();
 void compress(unsigned int info_flag);
 void parseInput();
 
 int main(int argc, char *argv[]) {
   unsigned int info_flag_enabled = 0;
+  unsigned int uncompress_flag_enabled = 0;
   char parse_flag[3] = "-p";
+  char uncompress_flag[3] = "-d";
   char info_flag[3] = "-i";
   for (int i = 0; i < argc; i++) {
     if (strcmp(argv[i], parse_flag) == 0) {
@@ -22,6 +25,12 @@ int main(int argc, char *argv[]) {
     if (strcmp(argv[i], info_flag) == 0) {
       info_flag_enabled = 1;
     }
+    if (strcmp(argv[i], uncompress_flag) == 0) {
+      uncompress_flag_enabled = 1;
+    }
+  }
+  if (uncompress_flag_enabled) {
+    uncompress();
   }
   compress(info_flag_enabled);
   return 0;
