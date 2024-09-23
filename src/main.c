@@ -31,8 +31,9 @@ int main(int argc, char *argv[]) {
   }
   if (uncompress_flag_enabled) {
     uncompress();
+  } else {
+    compress(info_flag_enabled);
   }
-  compress(info_flag_enabled);
   return 0;
 }
 
