@@ -29,6 +29,18 @@ void uncompress() {
   unsigned int nbits[number_of_chars];
   unsigned int current_margin = 9;
   unsigned int bit_pos = 0;
+
+  char *workingData = malloc(2 * sizeof(char));
+  unsigned int reversed_data =
+      readNBit(reversed_input, bit_pos, current_margin);
+  unsigned int data = reverseBitOrder(reversed_data, current_margin);
+  bit_pos += current_margin;
+  char **ch = malloc(sizeof(char *));
+  getSymbolValue(data, ch);
+  workingData[0] = (*ch)[0];
+  workingData[1] = 0;
+  printf("%s", *ch);
+
   while (bit_pos + current_margin < number_of_chars * 8) {
     unsigned int reversed_data =
         readNBit(reversed_input, bit_pos, current_margin);
@@ -36,7 +48,21 @@ void uncompress() {
     bit_pos += current_margin;
     char **ch = malloc(sizeof(char *));
     if (getSymbolValue(data, ch) > 0) {
-      printf("symbol found %s\n", *ch);
+      for (int idx = 0; idx < strlen(*ch); idx++) {
+        char *arg = concatCharToStr(workingData, (*ch)[idx]);
+        if (getSymbolNumber(arg) >= 0) {
+          free(workingData);
+          workingData = arg;
+        } else {
+          addSymbol(arg);
+          char *currentChar = malloc(2 * sizeof(char));
+          currentChar[0] = (*ch)[idx];
+          currentChar[1] = 0;
+          free(workingData);
+          workingData = currentChar;
+        }
+      }
+      printf("%s", *ch);
     } else {
       printf("symbol not found for %u\n", data);
     }
