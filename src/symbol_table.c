@@ -64,6 +64,7 @@ void fillSymbolTableTill256() {
   for (int j = 0; j < 256; j++) {
     char *b = malloc(2 * sizeof(char));
     b[0] = i;
+    b[1] = '\0';
     addSymbol(b);
     i++;
   }
