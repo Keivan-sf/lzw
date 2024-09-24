@@ -43,13 +43,13 @@ void uncompress() {
   uint8_t input[100000];
   int number_of_chars = 0;
   int iterations = 0;
-  char chs[1];
+  char currentByte[1];
   int bytes_read = 0;
-  while ((bytes_read = read(STDIN_FILENO, chs, 1)) > 0) {
+  while ((bytes_read = read(STDIN_FILENO, currentByte, 1)) > 0) {
     iterations++;
     if (iterations < 4)
       continue;
-    input[number_of_chars] = chs[0];
+    input[number_of_chars] = currentByte[0];
     number_of_chars++;
   }
 
@@ -61,8 +61,8 @@ void uncompress() {
 
   unsigned int nbits[number_of_chars];
   unsigned int current_margin = 9;
-  for (unsigned int bit_pos = 0;
-       bit_pos + current_margin < number_of_chars * 8;) {
+  unsigned int bit_pos = 0;
+  while (bit_pos + current_margin < number_of_chars * 8) {
     unsigned int reversed_data =
         readNBit(reversed_input, bit_pos, current_margin);
     unsigned int data = reverseBitOrder(reversed_data, current_margin);
