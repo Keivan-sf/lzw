@@ -39,6 +39,7 @@ void uncompress() {
   getSymbolValue(data, ch);
   workingData[0] = (*ch)[0];
   workingData[1] = 0;
+  // printf("This symbol came: %u => %s\n", data, *ch);
   printf("%s", *ch);
 
   char *prev_value = (*ch);
@@ -49,8 +50,10 @@ void uncompress() {
     bit_pos += current_margin;
     char **ch = malloc(sizeof(char *));
     if (getSymbolValue(data, ch) > 0) {
+      // printf("This symbol came: %u => %s\n", data, *ch);
+      char *arg = "";
       for (int idx = 0; idx < strlen(*ch); idx++) {
-        char *arg = concatCharToStr(workingData, (*ch)[idx]);
+        arg = concatCharToStr(workingData, (*ch)[idx]);
         if (getSymbolNumber(arg) >= 0) {
           free(workingData);
           workingData = arg;
@@ -66,6 +69,9 @@ void uncompress() {
       printf("%s", *ch);
       prev_value = *ch;
     } else {
+      workingData = prev_value;
+      // printf("This was not found: %u, so trying to check perv: '%s'\n", data,
+             // prev_value);
       for (int idx = 0; idx < strlen(prev_value); idx++) {
         char *arg = concatCharToStr(workingData, (prev_value)[idx]);
         if (getSymbolNumber(arg) >= 0) {
@@ -80,8 +86,13 @@ void uncompress() {
           workingData = currentChar;
         }
       }
-      getSymbolValue(data, ch);
-      printf("%s", *ch);
+      if (getSymbolValue(data, ch) <= 0) {
+        printf("\n\nwe still don't have the symbol bro\n\n");
+      } else {
+        // printf("symbol found after hard tries: %s\n" , *ch);
+        printf("%s", *ch);
+      };
+      prev_value = *ch;
     }
   }
 }
