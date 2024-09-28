@@ -4,7 +4,7 @@
 #include "symbol_table.h"
 #include "unistd.h"
 
-void uncompress() {
+void uncompress_old() {
   initiateSymbolTable();
   fillSymbolTableTill256();
   uint8_t input[100000];
