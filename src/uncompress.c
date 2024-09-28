@@ -26,7 +26,6 @@ void uncompress() {
     reversed_input[i] = reverseUint8BitOrder(input[i]);
   }
 
-  unsigned int nbits[number_of_chars];
   unsigned int current_margin = 9;
   unsigned int bit_pos = 0;
 
