@@ -10,11 +10,16 @@ struct uint8_list {
 };
 
 void readInput(struct uint8_list *input);
+void readInputInReverseBitOrder(struct uint8_list *input);
 
 void uncompress() {
   initiateSymbolTable();
   fillSymbolTableTill256();
   struct uint8_list *input = malloc(sizeof(struct uint8_list));
+  readInputInReverseBitOrder(input);
+}
+
+void readInputInReverseBitOrder(struct uint8_list *input) {
   readInput(input);
   for (int i = 0; i < input->len; i++) {
     printf("%u %c -> ", input->data[i], input->data[i]);
