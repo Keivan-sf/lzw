@@ -29,9 +29,8 @@ void readInput(struct uint8_list *input) {
   input->len = 0;
   int iterations = 0;
   char currentByte[1];
-  int bytes_read = 0;
 
-  while ((bytes_read = read(STDIN_FILENO, currentByte, 1)) > 0) {
+  while (read(STDIN_FILENO, currentByte, 1) > 0) {
     iterations++;
     if (iterations < 4)
       continue;
