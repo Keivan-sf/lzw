@@ -3,15 +3,17 @@
 #include "io.h"
 #include "symbol_table.h"
 #include "unistd.h"
-void readInput();
+void readInput(uint8_t ** input);
 
 void uncompress() {
   initiateSymbolTable();
   fillSymbolTableTill256();
-  readInput();
+  uint8_t* input = NULL;
+  uint8_t ** input_ptr = &input; 
+  readInput(input_ptr);
 }
 
-void readInput() {
+void readInput(uint8_t ** input_prt) {
   uint8_t *input = malloc(sizeof(uint8_t) * 2);
   unsigned int occupied_bytes = 0;
   unsigned int available_bytes = 1;
@@ -35,7 +37,9 @@ void readInput() {
     number_of_chars++;
   }
 
+  *input_prt = input;
   for (int i = 0; i < number_of_chars; i++) {
-    printf("%c", input[i]);
+    printf("%c - ", input[i]);
+    printf("%c |", (*input_prt)[i]);
   }
 }
