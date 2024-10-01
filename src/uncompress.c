@@ -3,12 +3,18 @@
 #include "io.h"
 #include "symbol_table.h"
 #include "unistd.h"
+void readInput();
 
 void uncompress() {
   initiateSymbolTable();
   fillSymbolTableTill256();
+  readInput();
+}
 
-  uint8_t input[100000];
+void readInput() {
+  uint8_t *input = malloc(sizeof(uint8_t) * 2);
+  unsigned int occupied_bytes = 0;
+  unsigned int available_bytes = 1;
   int number_of_chars = 0;
   int iterations = 0;
   char currentByte[1];
@@ -18,6 +24,13 @@ void uncompress() {
     iterations++;
     if (iterations < 4)
       continue;
+    if (occupied_bytes + 1 >= available_bytes) {
+      uint8_t *new_input = malloc(sizeof(uint8_t) * (available_bytes + 10));
+      copyUintArrayToAnother(input, new_input, available_bytes);
+      available_bytes += 10;
+      free(input);
+      input = new_input;
+    }
     input[number_of_chars] = currentByte[0];
     number_of_chars++;
   }
