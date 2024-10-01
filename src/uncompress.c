@@ -22,9 +22,7 @@ void uncompress() {
 void readInputInReverseBitOrder(struct uint8_list *input) {
   readInput(input);
   for (int i = 0; i < input->len; i++) {
-    printf("%u %c -> ", input->data[i], input->data[i]);
     input->data[i] = reverseUint8BitOrder(input->data[i]);
-    printf("%u\n", input->data[i]);
   }
 }
 
