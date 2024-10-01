@@ -17,6 +17,14 @@ void uncompress() {
   fillSymbolTableTill256();
   struct uint8_list *input = malloc(sizeof(struct uint8_list));
   readInputInReverseBitOrder(input);
+  unsigned int seqs_read = 0;
+  for (unsigned int pos = 0; pos < input->len * 8;) {
+    unsigned int current_data_reversed = readNBit(input->data, pos, 9);
+    seqs_read++;
+    unsigned int current = reverseBitOrder(current_data_reversed, 9);
+    printf("%u\n", current);
+    pos += 9;
+  }
 }
 
 void readInputInReverseBitOrder(struct uint8_list *input) {
