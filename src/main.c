@@ -97,6 +97,7 @@ void compress(unsigned int info_flag) {
     workingData[1] = 0;
   }
 
+  int seq = 257;
   while ((bytes_read = read(STDIN_FILENO, chs, 1)) > 0) {
     char *arg = concatCharToStr(workingData, chs[0]);
     if (getSymbolNumber(arg) >= 0) {
@@ -113,7 +114,7 @@ void compress(unsigned int info_flag) {
       }
       writeToOutputArray(symbolNumber, output_bits);
       if (info_flag) {
-        printf("%d ", symbolNumber);
+        printf("%d: %d ", seq++, symbolNumber);
       }
       char *currentChar = malloc(2 * sizeof(char));
       currentChar[0] = chs[0];

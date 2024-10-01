@@ -17,13 +17,17 @@ void uncompress() {
   fillSymbolTableTill256();
   struct uint8_list *input = malloc(sizeof(struct uint8_list));
   readInputInReverseBitOrder(input);
-  unsigned int seqs_read = 0;
+  unsigned int symbol_count = 257;
+  unsigned int seq_len = 9;
   for (unsigned int pos = 0; pos < input->len * 8;) {
-    unsigned int current_data_reversed = readNBit(input->data, pos, 9);
-    seqs_read++;
-    unsigned int current = reverseBitOrder(current_data_reversed, 9);
-    printf("%u\n", current);
-    pos += 9;
+    if (symbol_count > pow_int(2, seq_len)) {
+      seq_len++;
+    }
+    unsigned int current_data_reversed = readNBit(input->data, pos, seq_len);
+    unsigned int current = reverseBitOrder(current_data_reversed, seq_len);
+    printf("%u: %u\n", symbol_count, current);
+    pos += seq_len;
+    symbol_count++;
   }
 }
 
