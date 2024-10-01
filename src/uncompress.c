@@ -3,25 +3,30 @@
 #include "io.h"
 #include "symbol_table.h"
 #include "unistd.h"
-unsigned int readInput(uint8_t **input);
+
+struct uint8_list {
+  uint8_t *data;
+  unsigned long len, cap;
+};
+
+int readInput(struct uint8_list *input);
 
 void uncompress() {
   initiateSymbolTable();
   fillSymbolTableTill256();
-  uint8_t *input = NULL;
-  uint8_t **input_ptr = &input;
-  unsigned int number_of_chars = readInput(input_ptr);
-  for (int i = 0; i < number_of_chars; i++) {
-    printf("%u -> ", input[i]);
-    input[i] = reverseUint8BitOrder(input[i]);
-    printf("%u\n", input[i]);
+  struct uint8_list *input = malloc(sizeof(struct uint8_list));
+  unsigned int number_of_chars = readInput(input);
+  for (int i = 0; i < input->len; i++) {
+    printf("%u %c -> ", input->data[i], input->data[i]);
+    input->data[i] = reverseUint8BitOrder(input->data[i]);
+    printf("%u\n", input->data[i]);
   }
 }
 
-unsigned int readInput(uint8_t **input_prt) {
-  uint8_t *input = malloc(sizeof(uint8_t) * 2);
-  unsigned int occupied_bytes = 0;
-  unsigned int available_bytes = 1;
+int readInput(struct uint8_list *input) {
+  input->data = malloc(sizeof(uint8_t) * 5);
+  input->cap = 4;
+  input->len = 0;
   int number_of_chars = 0;
   int iterations = 0;
   char currentByte[1];
@@ -31,17 +36,17 @@ unsigned int readInput(uint8_t **input_prt) {
     iterations++;
     if (iterations < 4)
       continue;
-    if (occupied_bytes + 1 >= available_bytes) {
-      uint8_t *new_input = malloc(sizeof(uint8_t) * (available_bytes + 10));
-      copyUintArrayToAnother(input, new_input, available_bytes);
-      available_bytes += 10;
-      free(input);
-      input = new_input;
+    // printf("len: %u, cap %u\n", input->len, input->cap);
+    if (input->len + 1 >= input->cap) {
+      uint8_t *new_input_data = malloc(sizeof(uint8_t) * (input->cap + 10));
+      copyUintArrayToAnother(input->data, new_input_data, input->cap);
+      input->cap += 10;
+      free(input->data);
+      input->data = new_input_data;
     }
-    input[number_of_chars] = currentByte[0];
-    number_of_chars++;
+    input->data[input->len] = currentByte[0];
+    input->len++;
   }
 
-  *input_prt = input;
   return number_of_chars;
 }
