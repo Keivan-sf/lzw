@@ -12,7 +12,9 @@ void uncompress() {
   uint8_t **input_ptr = &input;
   unsigned int number_of_chars = readInput(input_ptr);
   for (int i = 0; i < number_of_chars; i++) {
-    printf("%c", input[i]);
+    printf("%u -> ", input[i]);
+    input[i] = reverseUint8BitOrder(input[i]);
+    printf("%u\n", input[i]);
   }
 }
 
