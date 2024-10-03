@@ -11,6 +11,8 @@ struct uint8_list {
 
 void readInput(struct uint8_list *input);
 void readInputInReverseBitOrder(struct uint8_list *input);
+unsigned int readNextSymbol(struct uint8_list *input, unsigned int pos,
+                            unsigned int seq_len);
 
 void uncompress() {
   initiateSymbolTable();
@@ -23,12 +25,17 @@ void uncompress() {
     if (symbol_count > pow_int(2, seq_len)) {
       seq_len++;
     }
-    unsigned int current_data_reversed = readNBit(input->data, pos, seq_len);
-    unsigned int current = reverseBitOrder(current_data_reversed, seq_len);
-    printf("%u: %u\n", symbol_count, current);
+    unsigned int current_symbol = readNextSymbol(input, pos, seq_len);
+    printf("%u: %u\n", symbol_count, current_symbol);
     pos += seq_len;
     symbol_count++;
   }
+}
+
+unsigned int readNextSymbol(struct uint8_list *input, unsigned int pos,
+                            unsigned int seq_len) {
+  unsigned int current_data_reversed = readNBit(input->data, pos, seq_len);
+  return reverseBitOrder(current_data_reversed, seq_len);
 }
 
 void readInputInReverseBitOrder(struct uint8_list *input) {
