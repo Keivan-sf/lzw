@@ -21,14 +21,38 @@ void uncompress() {
   readInputInReverseBitOrder(input);
   unsigned int symbol_count = 257;
   unsigned int seq_len = 9;
+
+  char *workingData = malloc(1 * sizeof(char));
+  workingData[0] = '\0';
   for (unsigned int pos = 0; pos < input->len * 8;) {
     if (symbol_count > pow_int(2, seq_len)) {
       seq_len++;
     }
     unsigned int current_symbol = readNextSymbol(input, pos, seq_len);
-    printf("%u: %u\n", symbol_count, current_symbol);
     pos += seq_len;
     symbol_count++;
+
+    char **chs = malloc(sizeof(char *));
+    if (getSymbolValue(current_symbol, chs) > 0) {
+      printf("%s", *chs);
+      char *arg;
+      for (unsigned int i = 0; i < strlen(*chs); i++) {
+        arg = concatCharToStr(workingData, (*chs)[i]);
+        if (getSymbolNumber(arg) >= 0) {
+          free(workingData);
+          workingData = arg;
+        } else {
+          addSymbol(arg);
+          char *currentChar = malloc(2 * sizeof(char));
+          currentChar[0] = (*chs)[i];
+          currentChar[1] = 0;
+          free(workingData);
+          workingData = currentChar;
+        }
+      }
+    } else {
+      printf("\nsymbol not found\n");
+    }
   }
 }
 
