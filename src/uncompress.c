@@ -24,6 +24,9 @@ void uncompress() {
 
   char *workingData = malloc(1 * sizeof(char));
   workingData[0] = '\0';
+
+  char *last_symbol_value = malloc(1 * sizeof(char));
+  last_symbol_value[0] = '\0';
   for (unsigned int pos = 0; pos < input->len * 8;) {
     if (symbol_count > pow_int(2, seq_len)) {
       seq_len++;
@@ -35,6 +38,7 @@ void uncompress() {
     char **chs = malloc(sizeof(char *));
     if (getSymbolValue(current_symbol, chs) > 0) {
       printf("%s", *chs);
+      last_symbol_value = *chs;
       char *arg;
       for (unsigned int i = 0; i < strlen(*chs); i++) {
         arg = concatCharToStr(workingData, (*chs)[i]);
@@ -51,7 +55,28 @@ void uncompress() {
         }
       }
     } else {
-      printf("\nsymbol not found\n");
+      char *current_seq = concatCharToStr(last_symbol_value, workingData[0]);
+      for (int i = 0; i < strlen(current_seq); i++) {
+        char *arg = concatCharToStr(workingData, current_seq[i]);
+        if (getSymbolNumber(arg) >= 0) {
+          free(workingData);
+          workingData = arg;
+        } else {
+          addSymbol(arg);
+          char *currentChar = malloc(2 * sizeof(char));
+          currentChar[0] = current_seq[i];
+          currentChar[1] = 0;
+          free(workingData);
+          workingData = currentChar;
+        }
+      }
+
+      if (getSymbolValue(current_symbol, chs) <= 0) {
+        printf("\n\nERROR: we still don't have the symbol after re-processing "
+               "the previous one \n\n");
+      } else {
+        printf("%s", *chs);
+      };
     }
   }
 }
