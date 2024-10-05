@@ -2,23 +2,38 @@
 #include "chars.h"
 #include "io.h"
 #include "symbol_table.h"
+#include "uncompress.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-void compress();
+void compress(unsigned int info_flag);
 void parseInput();
 
 int main(int argc, char *argv[]) {
+  unsigned int info_flag_enabled = 0;
+  unsigned int uncompress_flag_enabled = 0;
   char parse_flag[3] = "-p";
+  char uncompress_flag[3] = "-d";
+  char info_flag[3] = "-i";
   for (int i = 0; i < argc; i++) {
     if (strcmp(argv[i], parse_flag) == 0) {
       parseInput();
       return 0;
     }
+    if (strcmp(argv[i], info_flag) == 0) {
+      info_flag_enabled = 1;
+    }
+    if (strcmp(argv[i], uncompress_flag) == 0) {
+      uncompress_flag_enabled = 1;
+    }
   }
-  compress();
+  if (uncompress_flag_enabled) {
+    uncompress();
+  } else {
+    compress(info_flag_enabled);
+  }
   return 0;
 }
 
@@ -41,6 +56,8 @@ void parseInput() {
     reversed_input[i] = 0;
     reversed_input[i] = reverseUint8BitOrder(input[i]);
   }
+
+  // TODO: to uncompress its crucial to read from the reversed in 9bit (n_bint)
 
   unsigned int n = 9;
   unsigned int number_of_9_bits = 0;
@@ -67,7 +84,7 @@ void parseInput() {
   }
 }
 
-void compress() {
+void compress(unsigned int info_flag) {
   initOutput();
   initiateSymbolTable();
   fillSymbolTableTill256();
@@ -80,18 +97,25 @@ void compress() {
     workingData[1] = 0;
   }
 
+  int seq = 257;
   while ((bytes_read = read(STDIN_FILENO, chs, 1)) > 0) {
     char *arg = concatCharToStr(workingData, chs[0]);
     if (getSymbolNumber(arg) >= 0) {
       free(workingData);
       workingData = arg;
     } else {
+      if (info_flag) {
+        printf("adding arg %s\n", arg);
+      }
       addSymbol(arg);
       int symbolNumber = getSymbolNumber(workingData);
       if (getNumberOfSymbols() > pow_int(2, output_bits) + 1) {
         output_bits++;
       }
       writeToOutputArray(symbolNumber, output_bits);
+      if (info_flag) {
+        printf("%d: %d ", seq++, symbolNumber);
+      }
       char *currentChar = malloc(2 * sizeof(char));
       currentChar[0] = chs[0];
       currentChar[1] = 0;
@@ -102,7 +126,13 @@ void compress() {
 
   if (strlen(workingData) > 0) {
     writeToOutputArray(getSymbolNumber(workingData), output_bits);
+    if (info_flag) {
+      printf("%d ", getSymbolNumber(workingData));
+    }
   }
-  writeLZWPrefixToStdOut();
-  writeOutputArrayToStdOut();
+
+  if (!info_flag) {
+    writeLZWPrefixToStdOut();
+    writeOutputArrayToStdOut();
+  }
 }

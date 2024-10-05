@@ -9,3 +9,4 @@ int pow_int(int a, int b);
 void testWriteBitsToUint8Array2();
 void testReverseBitOrder2();
 uint8_t reverseUint8BitOrder(uint8_t);
+unsigned int readNBit(uint8_t *input, unsigned int pos, unsigned int n);

@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdio.h>
 
 int writeBitsToUint8Array(unsigned int n, unsigned int bit_len,
                           unsigned int currentPos, uint8_t *output);
@@ -70,3 +71,18 @@ int writeBitsToUint8Array(unsigned int n, unsigned int bit_len,
   }
   return currentPos;
 }
+
+unsigned int readNBit(uint8_t *input, unsigned int pos, unsigned int n) {
+  unsigned int current_index = pos / 8;
+  unsigned int current_pos = pos % 8;
+  unsigned int output = 0;
+  for (unsigned int i = 0; i < n; i++) {
+    current_pos = (pos + i) % 8;
+    current_index = (pos + i) / 8;
+    uint8_t the_bit = input[current_index] << (current_pos);
+    the_bit = the_bit >> 7;
+    output += the_bit * (the_bit << (n - 1 - i));
+  }
+  return output;
+}
+
