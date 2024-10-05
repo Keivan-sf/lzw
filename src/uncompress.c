@@ -27,7 +27,7 @@ void uncompress() {
 
   char *last_symbol_value = malloc(1 * sizeof(char));
   last_symbol_value[0] = '\0';
-  for (unsigned int pos = 0; pos < input->len * 8;) {
+  for (unsigned int pos = 0; pos + seq_len < input->len * 8;) {
     if (symbol_count > pow_int(2, seq_len)) {
       seq_len++;
     }
