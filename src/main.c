@@ -57,8 +57,6 @@ void parseInput() {
     reversed_input[i] = reverseUint8BitOrder(input[i]);
   }
 
-  // TODO: to uncompress its crucial to read from the reversed in 9bit (n_bint)
-
   unsigned int n = 9;
   unsigned int number_of_9_bits = 0;
   unsigned int separated_nbits[number_of_chars];
