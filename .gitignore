@@ -3,3 +3,5 @@ bits
 .obj
 unit-tests
 .test-obj
+a.out
+generated-test-file
